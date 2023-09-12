@@ -94,9 +94,11 @@
         </div>
         <div class="wrapper">
 
-            <div style="height: 900px;"></div>
+            <div style="height: 900px;">
+            <button class="btn btn-blue_fill" @click="openModal">Показать условия тарифа</button>
+            </div>
 
-            <div class="modal_side modal_right" style="display: block;">
+            <div v-if="modalOpen" class="modal_side modal_right" style="display: block;">
                 <div class="modal_side_wrap">
                     <div class="modal_head modal_head_tarif">
                         <h5>Правила тарифа</h5>
@@ -107,12 +109,12 @@
                             </a>
                         </div>
                         <div class="razdel_switch tabs tabs-but">
-                            <a href="#" class="swit_razdel1 active">Раздел 15</a>
-                            <a href="#" class="swit_razdel2">Раздел 16</a>
-                            <a href="#" class="swit_razdel3">Раздел 21</a>
-                            <a href="#" class="swit_razdel4">Раздел 22</a>
+                            <a v-for="chapter in chapters" href="#"
+                            :name="chapter.name" class="swit_razdel1 active" :key="chapter.id">
+                                Раздел {{ chapter.id }}
+                            </a>
                         </div>
-                        <a href="#" class="btn btn-icon btn-blue_fill modal_close">
+                        <a @click="openModal" href="#" class="btn btn-icon btn-blue_fill modal_close">
                             <svg class="icon18">
                                 <use xlink:href="#"></use>
                             </svg>
@@ -125,14 +127,14 @@
                     </div>
             </div>
         </div>
-        <div class="lay" style="display: block"></div>
+        <div @click="openModal" v-if="modalOpen" class="lay" style="display: block"></div>
 
     </div>
 </div></template>
 
 <script>
 import rulesData from "@/rules.json";
-console.log(rulesData)
+import chapters from "@/data/chapters";
 
 export default {
     name: 'App',
@@ -142,6 +144,8 @@ export default {
             rulesText: null,
             idPax: null,
             activeIndex: null,
+            modalOpen: false,
+            chapters,
         }
     },
     methods: {
@@ -150,6 +154,12 @@ export default {
             this.rulesText = rulesData.Rules.find((el) => el.PaxSegmentRefID === this.idPax).FareRuleText.Remark.RemarkText;
             this.activeIndex = (this.activeIndex === e.currentTarget.id) ? null : e.currentTarget.id;
         },
+        openModal() {
+            this.modalOpen = !this.modalOpen;
+        },
+        // scrollToChapter(e) {
+        //    this.rulesText.indexOf(e.currentTarget.name).scrollIntoView();       
+        // },
     }
 }
 </script>

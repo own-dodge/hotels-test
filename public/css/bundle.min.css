@@ -7083,6 +7083,7 @@ h1 + .search_widget {
   white-space: normal;
 }
 .razdel_switch.tabs-but {
+  flex-wrap: wrap;
   width: 100%;
   padding: 10px 0;
   margin-top: 10px;
@@ -7100,7 +7101,13 @@ h1 + .search_widget {
   text-transform: uppercase;
 }
 .razdel_switch.tabs-but a + a {
-  margin-left: 10px;
+  margin-left: 10px;  
+}
+.swit_razdel1 {
+  margin-bottom: 10px;
+}
+.razdel_switch.tabs-but a + a:nth-child(12n) {
+  margin-left: 0;
 }
 .rules_wrap {
   margin-top: 25px;
